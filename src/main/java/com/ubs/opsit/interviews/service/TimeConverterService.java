@@ -10,11 +10,10 @@ import com.ubs.opsit.interviews.TimeConverter;
 public class TimeConverterService implements TimeConverter {
 
 	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-	
-	private static final String SECOND_BLINK = "Y";
-	private static final String HOUR_BLINK = "R";	
-	private static final String OFF = "O";
 
+	private static final String YELLOW = "Y";
+	private static final String RED = "R";
+	private static final String OFF = "O";
 
 	@Override
 	public String convertTime(String aTime) {
@@ -34,7 +33,7 @@ public class TimeConverterService implements TimeConverter {
 		}
 
 		if (checkEvenInput(seconds)) {
-			output.append(SECOND_BLINK);
+			output.append(YELLOW);
 		} else {
 			output.append(OFF);
 		}
@@ -67,11 +66,11 @@ public class TimeConverterService implements TimeConverter {
 		int quot = hour / 5;
 		int remainder = hour % 5;
 
-		loopAndAppend(sbf, quot, HOUR_BLINK, false, 0);
+		loopAndAppend(sbf, quot, RED, false, 0);
 		loopAndAppend(sbf, 4 - quot, OFF, false, 0);
 		sbf.append(System.lineSeparator());
 
-		loopAndAppend(sbf, remainder, HOUR_BLINK, false, 0);
+		loopAndAppend(sbf, remainder, RED, false, 0);
 		loopAndAppend(sbf, 4 - remainder, OFF, false, 0);
 		sbf.append(System.lineSeparator());
 
@@ -89,11 +88,11 @@ public class TimeConverterService implements TimeConverter {
 		int quot = minute / 5;
 		int remainder = minute % 5;
 
-		loopAndAppend(stringBuilder, quot, SECOND_BLINK, true, 3);
+		loopAndAppend(stringBuilder, quot, YELLOW, true, 3);
 		loopAndAppend(stringBuilder, 11 - quot, OFF, false, 0);
 		stringBuilder.append(System.lineSeparator());
 
-		loopAndAppend(stringBuilder, remainder, SECOND_BLINK, false, 0);
+		loopAndAppend(stringBuilder, remainder, YELLOW, false, 0);
 		loopAndAppend(stringBuilder, 4 - remainder, OFF, false, 0);
 	}
 
@@ -110,7 +109,7 @@ public class TimeConverterService implements TimeConverter {
 		for (int i = 1; i <= threshold; i++) {
 			if (factor3Switch) {
 				if (i > 0 && (i % factorValue) == 0) {
-					stringBuilder.append(HOUR_BLINK);
+					stringBuilder.append(RED);
 				} else {
 					stringBuilder.append(appender);
 				}
